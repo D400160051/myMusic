@@ -1,9 +1,10 @@
 package com.mymusic
 
 import android.Manifest
+import android.content.ContentUris
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.database.Cursor
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -22,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: SongAdapter
     private var songs: List<Song> = emptyList()
+    private lateinit var prefs: android.content.SharedPreferences
 
     private val permissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -35,6 +37,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        prefs = getSharedPreferences("mymusic", Context.MODE_PRIVATE)
+
         adapter = SongAdapter(
             songs = emptyList(),
             onSongClick = { song: Song, index: Int ->
@@ -42,14 +46,14 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, PlayerActivity::class.java))
             }
         )
+
         binding.rvSongs.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = this@MainActivity.adapter
         }
 
-        binding.fabFolder.setOnClickListener {
-            MusicPlayerManager.getInstance(this).setSongs(songs, 0)
-            startActivity(Intent(this, PlayerActivity::class.java))
+        binding.btnSettings.setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
         }
 
         checkPermission()
@@ -71,21 +75,29 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadSongs() {
+        val selectedFolder = prefs.getString("music_folder", null)
+
         val projection = arrayOf(
             MediaStore.Audio.Media._ID,
             MediaStore.Audio.Media.TITLE,
             MediaStore.Audio.Media.ARTIST,
             MediaStore.Audio.Media.ALBUM,
+            MediaStore.Audio.Media.ALBUM_ID,
             MediaStore.Audio.Media.DURATION,
             MediaStore.Audio.Media.DATA
         )
 
-        val selection = "${MediaStore.Audio.Media.IS_MUSIC} != 0"
+        val selection = if (selectedFolder != null) {
+            "${MediaStore.Audio.Media.IS_MUSIC} != 0 AND ${MediaStore.Audio.Media.DATA} LIKE ?"
+        } else {
+            "${MediaStore.Audio.Media.IS_MUSIC} != 0"
+        }
+        val selectionArgs = if (selectedFolder != null) arrayOf("$selectedFolder/%") else null
         val sortOrder = "${MediaStore.Audio.Media.TITLE} ASC"
 
-        val cursor: Cursor? = contentResolver.query(
+        val cursor = contentResolver.query(
             MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-            projection, selection, null, sortOrder
+            projection, selection, selectionArgs, sortOrder
         )
 
         songs = cursor?.use { c ->
@@ -93,21 +105,25 @@ class MainActivity : AppCompatActivity() {
             val titleCol = c.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE)
             val artistCol = c.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST)
             val albumCol = c.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM)
+            val albumIdCol = c.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM_ID)
             val durCol = c.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)
             val dataCol = c.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
 
             val list = mutableListOf<Song>()
             while (c.moveToNext()) {
+                val id = c.getLong(idCol)
                 val data = c.getString(dataCol)
-                val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
                 list.add(
                     Song(
-                        id = c.getLong(idCol),
+                        id = id,
                         title = c.getString(titleCol) ?: "Unknown",
                         artist = c.getString(artistCol) ?: getString(R.string.unknown_artist),
                         album = c.getString(albumCol) ?: "",
+                        albumId = c.getLong(albumIdCol),
                         durationMs = c.getLong(durCol),
-                        uri = uri,
+                        uri = ContentUris.withAppendedId(
+                            MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, id
+                        ),
                         data = data
                     )
                 )
@@ -115,7 +131,14 @@ class MainActivity : AppCompatActivity() {
             list
         } ?: emptyList()
 
-        adapter.updateSongs(songs)
+        adapter = SongAdapter(
+            songs = songs,
+            onSongClick = { song: Song, index: Int ->
+                MusicPlayerManager.getInstance(this).setSongs(songs, index)
+                startActivity(Intent(this, PlayerActivity::class.java))
+            }
+        )
+        binding.rvSongs.adapter = adapter
         binding.tvCount.text = "${songs.size} lagu"
     }
 }

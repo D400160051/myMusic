@@ -1,15 +1,19 @@
 package com.mymusic
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.widget.ImageView
 import android.widget.SeekBar
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.mymusic.adapter.SongAdapter
 import com.mymusic.databinding.ActivityPlayerBinding
 import com.mymusic.model.Song
 import com.mymusic.player.BitPerfectAudio
@@ -21,7 +25,9 @@ class PlayerActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPlayerBinding
     private lateinit var player: MusicPlayerManager
     private lateinit var bitPerfect: BitPerfectAudio
-    private var isBitPerfect = false
+    private lateinit var playlistAdapter: SongAdapter
+    private var bottomSheetBehavior: BottomSheetBehavior<*>? = null
+
     private val handler = Handler(Looper.getMainLooper())
     private val updateProgress = object : Runnable {
         override fun run() {
@@ -41,13 +47,45 @@ class PlayerActivity : AppCompatActivity() {
         player = MusicPlayerManager.getInstance(this)
         bitPerfect = BitPerfectAudio(this)
 
+        setupBottomSheet()
         setupUI()
         setupPlayerListeners()
         updateSongInfo()
         checkDac()
     }
 
+    private fun setupBottomSheet() {
+        bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet)
+        bottomSheetBehavior?.apply {
+            peekHeight = resources.getDimensionPixelSize(R.dimen.bottom_sheet_peek)
+            state = BottomSheetBehavior.STATE_COLLAPSED
+            isHideable = false
+        }
+
+        playlistAdapter = SongAdapter(
+            songs = player.getSongList(),
+            onSongClick = { song: Song, index: Int ->
+                player.setSongs(player.getSongList(), index)
+                bottomSheetBehavior?.state = BottomSheetBehavior.STATE_COLLAPSED
+            },
+            currentSongId = player.getCurrentSong()?.id ?: -1
+        )
+
+        binding.rvPlaylist.apply {
+            layoutManager = LinearLayoutManager(this@PlayerActivity)
+            adapter = playlistAdapter
+        }
+    }
+
     private fun setupUI() {
+        binding.ivAlbumArt.setOnClickListener {
+            if (bottomSheetBehavior?.state != BottomSheetBehavior.STATE_EXPANDED) {
+                bottomSheetBehavior?.state = BottomSheetBehavior.STATE_EXPANDED
+            } else {
+                bottomSheetBehavior?.state = BottomSheetBehavior.STATE_COLLAPSED
+            }
+        }
+
         binding.btnPlayPause.setOnClickListener {
             player.playPause()
             updatePlayPauseIcon()
@@ -61,10 +99,6 @@ class PlayerActivity : AppCompatActivity() {
 
         binding.btnEqualizer.setOnClickListener {
             startActivity(Intent(this, EqualizerActivity::class.java))
-        }
-
-        binding.btnBitPerfect.setOnClickListener {
-            toggleBitPerfect()
         }
 
         binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -84,9 +118,10 @@ class PlayerActivity : AppCompatActivity() {
             runOnUiThread {
                 updateSongInfo()
                 binding.seekBar.max = player.getDuration().toInt()
+                highlightCurrentSong()
             }
         }
-        player.onPlaybackStateChanged = { playing ->
+        player.onPlaybackStateChanged = { _ ->
             runOnUiThread { updatePlayPauseIcon() }
         }
     }
@@ -97,6 +132,31 @@ class PlayerActivity : AppCompatActivity() {
         binding.tvArtist.text = song.artist
         binding.seekBar.max = player.getDuration().toInt()
         binding.tvTotal.text = formatTime(player.getDuration())
+        loadAlbumArt(song)
+    }
+
+    private fun loadAlbumArt(song: Song) {
+        try {
+            if (song.albumId > 0) {
+                val uri = song.getAlbumArtUri()
+                val inputStream = contentResolver.openInputStream(uri)
+                val bitmap = BitmapFactory.decodeStream(inputStream)
+                if (bitmap != null) {
+                    binding.ivAlbumArt.setImageBitmap(bitmap)
+                } else {
+                    binding.ivAlbumArt.setImageResource(R.drawable.ic_audiotrack)
+                }
+                inputStream?.close()
+            } else {
+                binding.ivAlbumArt.setImageResource(R.drawable.ic_audiotrack)
+            }
+        } catch (_: Exception) {
+            binding.ivAlbumArt.setImageResource(R.drawable.ic_audiotrack)
+        }
+    }
+
+    private fun highlightCurrentSong() {
+        playlistAdapter.updateSongs(player.getSongList())
     }
 
     private fun updatePlayPauseIcon() {
@@ -117,34 +177,10 @@ class PlayerActivity : AppCompatActivity() {
     private fun checkDac() {
         if (bitPerfect.isUsbDacConnected()) {
             binding.tvDacStatus.text = bitPerfect.getUsbDacInfo()
-            binding.tvDacStatus.setTextColor(
-                ContextCompat.getColor(this, R.color.primary)
-            )
+            binding.tvDacStatus.setTextColor(ContextCompat.getColor(this, R.color.primary))
         } else {
             binding.tvDacStatus.text = getString(R.string.dac_disconnected)
-            binding.tvDacStatus.setTextColor(
-                ContextCompat.getColor(this, R.color.text_secondary)
-            )
-        }
-    }
-
-    private fun toggleBitPerfect() {
-        isBitPerfect = !isBitPerfect
-        if (isBitPerfect && bitPerfect.isUsbDacConnected()) {
-            player.setupBitPerfectMode()
-            binding.btnBitPerfect.setBackgroundColor(
-                ContextCompat.getColor(this, R.color.primary)
-            )
-            Toast.makeText(this, "Bit-Perfect: ON", Toast.LENGTH_SHORT).show()
-        } else if (isBitPerfect && !bitPerfect.isUsbDacConnected()) {
-            isBitPerfect = false
-            Toast.makeText(this, "USB DAC tidak terdeteksi", Toast.LENGTH_SHORT).show()
-        } else {
-            player.setupNormalMode()
-            binding.btnBitPerfect.setBackgroundColor(
-                ContextCompat.getColor(this, R.color.surface)
-            )
-            Toast.makeText(this, "Bit-Perfect: OFF", Toast.LENGTH_SHORT).show()
+            binding.tvDacStatus.setTextColor(ContextCompat.getColor(this, R.color.text_secondary))
         }
     }
 
