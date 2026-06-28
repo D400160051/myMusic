@@ -3,6 +3,7 @@ package com.mymusic
 import android.media.audiofx.Equalizer
 import android.os.Build
 import android.os.Bundle
+import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -46,9 +47,9 @@ class EqualizerActivity : AppCompatActivity() {
                     max = max - min
                     progress = current - min
                     tag = i
-                    layoutParams = SeekBar.LayoutParams(
-                        SeekBar.LayoutParams.MATCH_PARENT,
-                        SeekBar.LayoutParams.WRAP_CONTENT
+                    layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
                     )
 
                     setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {

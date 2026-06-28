@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        adapter = SongAdapter(emptyList()) { song, index ->
+        adapter = SongAdapter(emptyList()) { song: Song, index: Int ->
             MusicPlayerManager.getInstance(this).setSongs(songs, index)
             startActivity(Intent(this, PlayerActivity::class.java))
         }
