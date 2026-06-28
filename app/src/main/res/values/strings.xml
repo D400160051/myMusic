@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MyMusic</string>
+    <string name="select_folder">Pilih Folder</string>
+    <string name="now_playing">Sedang Diputar</string>
+    <string name="shuffle">Acak</string>
+    <string name="equalizer">Equalizer</string>
+    <string name="bit_perfect">Bit-Perfect Mode</string>
+    <string name="no_songs">Tidak ada lagu</string>
+    <string name="unknown_artist">Unknown Artist</string>
+    <string name="dac_connected">DAC Terdeteksi</string>
+    <string name="dac_disconnected">DAC Tidak Terdeteksi</string>
+</resources>
