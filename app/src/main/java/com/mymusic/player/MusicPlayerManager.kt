@@ -36,7 +36,7 @@ class MusicPlayerManager private constructor(private val context: Context) {
         player = ExoPlayer.Builder(context)
             .setAudioAttributes(audioAttributes, true)
             .setHandleAudioBecomingNoisy(true)
-            .setWakeMode(C.WAKE_MODE_NETWORK)
+            .setWakeMode(C.WAKE_MODE_NONE)
             .build()
 
         player.addListener(object : Player.Listener {
