@@ -39,13 +39,13 @@ class EqualizerActivity : AppCompatActivity() {
 
             for (i in 0 until bands) {
                 val freq = eq.getCenterFreq(i.toShort()) / 1000f
-                val min = eq.getBandLevelRange()[0] / 100
-                val max = eq.getBandLevelRange()[1] / 100
-                val current = eq.getBandLevel(i.toShort()) / 100
+                val minLevel = eq.getBandLevelRange()[0] / 100
+                val maxLevel = eq.getBandLevelRange()[1] / 100
+                val currentLevel = eq.getBandLevel(i.toShort()) / 100
 
                 val seekBar = SeekBar(this).apply {
-                    max = max - min
-                    progress = current - min
+                    max = maxLevel - minLevel
+                    progress = currentLevel - minLevel
                     tag = i
                     layoutParams = LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
@@ -54,9 +54,9 @@ class EqualizerActivity : AppCompatActivity() {
 
                     setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                         override fun onProgressChanged(sb: SeekBar?, p: Int, f: Boolean) {
-                            val level = (p + min) * 100
+                            val level = (p + minLevel) * 100
                             eq.setBandLevel(i.toShort(), level.toShort())
-                            bandLabels[i].text = "${p + min} dB"
+                            bandLabels[i].text = "${p + minLevel} dB"
                         }
                         override fun onStartTrackingTouch(sb: SeekBar?) {}
                         override fun onStopTrackingTouch(sb: SeekBar?) {}
@@ -70,7 +70,7 @@ class EqualizerActivity : AppCompatActivity() {
                 }
 
                 val valueLabel = TextView(this).apply {
-                    text = "$current dB"
+                    text = "$currentLevel dB"
                     textSize = 12f
                     gravity = android.view.Gravity.CENTER
                 }
@@ -102,8 +102,8 @@ class EqualizerActivity : AppCompatActivity() {
             val bands = eq.numberOfBands
             for (i in 0 until bands) {
                 eq.setBandLevel(i.toShort(), 0)
-                val min = eq.getBandLevelRange()[0] / 100
-                bandSeekBars[i].progress = -min
+                val minReset = eq.getBandLevelRange()[0] / 100
+                bandSeekBars[i].progress = -minReset
                 bandLabels[i].text = "0 dB"
             }
         }
