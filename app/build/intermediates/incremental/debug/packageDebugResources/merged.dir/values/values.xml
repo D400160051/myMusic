@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="active_song_bg">#1A1DB954</color>
+    <color name="background">#121212</color>
+    <color name="on_background">#FFFFFF</color>
+    <color name="on_primary">#FFFFFF</color>
+    <color name="on_surface">#FFFFFF</color>
+    <color name="primary">#1DB954</color>
+    <color name="primary_dark">#0D7A32</color>
+    <color name="primary_variant">#169C46</color>
+    <color name="secondary">#FF6F00</color>
+    <color name="surface">#1E1E1E</color>
+    <color name="surface_light">#282828</color>
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#B3FFFFFF</color>
+    <color name="text_tertiary">#80FFFFFF</color>
+    <dimen name="bottom_sheet_peek">56dp</dimen>
+    <string name="app_name">MyMusic</string>
+    <string name="bit_perfect">Bit-Perfect Mode</string>
+    <string name="dac_connected">DAC Terdeteksi</string>
+    <string name="dac_disconnected">DAC Tidak Terdeteksi</string>
+    <string name="equalizer">Equalizer</string>
+    <string name="no_songs">Tidak ada lagu</string>
+    <string name="now_playing">Sedang Diputar</string>
+    <string name="select_folder">Pilih Folder</string>
+    <string name="shuffle">Acak</string>
+    <string name="unknown_artist">Unknown Artist</string>
+    <style name="Theme.MyMusic" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/on_primary</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="android:colorBackground">@color/background</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/on_surface</item>
+    </style>
+</resources>

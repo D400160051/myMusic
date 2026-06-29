@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "com.mymusic.app-mergeDebugResources-37:/layout/item_song.xml",
+        "source": "com.mymusic.app-main-40:/layout/item_song.xml"
+    },
+    {
+        "merged": "com.mymusic.app-mergeDebugResources-37:/layout/activity_main.xml",
+        "source": "com.mymusic.app-main-40:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.mymusic.app-mergeDebugResources-37:/layout/activity_equalizer.xml",
+        "source": "com.mymusic.app-main-40:/layout/activity_equalizer.xml"
+    },
+    {
+        "merged": "com.mymusic.app-mergeDebugResources-37:/layout/activity_settings.xml",
+        "source": "com.mymusic.app-main-40:/layout/activity_settings.xml"
+    },
+    {
+        "merged": "com.mymusic.app-mergeDebugResources-37:/layout/activity_player.xml",
+        "source": "com.mymusic.app-main-40:/layout/activity_player.xml"
+    }
+]

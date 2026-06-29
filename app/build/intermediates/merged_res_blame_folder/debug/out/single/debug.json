@@ -1,0 +1,78 @@
+[
+    {
+        "merged": "com.mymusic.app-merged_res-38:/layout_activity_main.xml.flat",
+        "source": "com.mymusic.app-main-40:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.mymusic.app-merged_res-38:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.mymusic.app-main-40:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "com.mymusic.app-merged_res-38:/drawable_play_button_bg.xml.flat",
+        "source": "com.mymusic.app-main-40:/drawable/play_button_bg.xml"
+    },
+    {
+        "merged": "com.mymusic.app-merged_res-38:/drawable_ic_audiotrack.xml.flat",
+        "source": "com.mymusic.app-main-40:/drawable/ic_audiotrack.xml"
+    },
+    {
+        "merged": "com.mymusic.app-merged_res-38:/drawable_drag_handle.xml.flat",
+        "source": "com.mymusic.app-main-40:/drawable/drag_handle.xml"
+    },
+    {
+        "merged": "com.mymusic.app-merged_res-38:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "com.mymusic.app-main-40:/drawable/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "com.mymusic.app-merged_res-38:/layout_activity_player.xml.flat",
+        "source": "com.mymusic.app-main-40:/layout/activity_player.xml"
+    },
+    {
+        "merged": "com.mymusic.app-merged_res-38:/drawable_gradient_bg.xml.flat",
+        "source": "com.mymusic.app-main-40:/drawable/gradient_bg.xml"
+    },
+    {
+        "merged": "com.mymusic.app-merged_res-38:/drawable_ic_launcher_background.xml.flat",
+        "source": "com.mymusic.app-main-40:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "com.mymusic.app-merged_res-38:/drawable_album_art_placeholder.xml.flat",
+        "source": "com.mymusic.app-main-40:/drawable/album_art_placeholder.xml"
+    },
+    {
+        "merged": "com.mymusic.app-merged_res-38:/layout_activity_equalizer.xml.flat",
+        "source": "com.mymusic.app-main-40:/layout/activity_equalizer.xml"
+    },
+    {
+        "merged": "com.mymusic.app-merged_res-38:/layout_item_song.xml.flat",
+        "source": "com.mymusic.app-main-40:/layout/item_song.xml"
+    },
+    {
+        "merged": "com.mymusic.app-merged_res-38:/drawable_album_art_bg.xml.flat",
+        "source": "com.mymusic.app-main-40:/drawable/album_art_bg.xml"
+    },
+    {
+        "merged": "com.mymusic.app-merged_res-38:/layout_activity_settings.xml.flat",
+        "source": "com.mymusic.app-main-40:/layout/activity_settings.xml"
+    },
+    {
+        "merged": "com.mymusic.app-merged_res-38:/drawable_seekbar_progress.xml.flat",
+        "source": "com.mymusic.app-main-40:/drawable/seekbar_progress.xml"
+    },
+    {
+        "merged": "com.mymusic.app-merged_res-38:/drawable_album_art_shadow.xml.flat",
+        "source": "com.mymusic.app-main-40:/drawable/album_art_shadow.xml"
+    },
+    {
+        "merged": "com.mymusic.app-merged_res-38:/drawable_seekbar_thumb.xml.flat",
+        "source": "com.mymusic.app-main-40:/drawable/seekbar_thumb.xml"
+    },
+    {
+        "merged": "com.mymusic.app-merged_res-38:/drawable_divider_gradient.xml.flat",
+        "source": "com.mymusic.app-main-40:/drawable/divider_gradient.xml"
+    },
+    {
+        "merged": "com.mymusic.app-merged_res-38:/drawable_bottom_sheet_bg.xml.flat",
+        "source": "com.mymusic.app-main-40:/drawable/bottom_sheet_bg.xml"
+    }
+]

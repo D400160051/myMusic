@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/surface"
+        app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/surface"
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            app:navigationContentDescription="Back">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Settings"
+                android:textColor="@color/on_surface"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="Pemutaran"
+                android:textColor="@color/primary"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardEqualizer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                app:cardBackgroundColor="@color/surface"
+                app:strokeColor="@color/surface"
+                app:cardElevation="0dp"
+                app:contentPadding="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Equalizer"
+                        android:textColor="@color/on_surface"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=">"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardBitPerfect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                app:cardBackgroundColor="@color/surface"
+                app:strokeColor="@color/surface"
+                app:cardElevation="0dp"
+                app:contentPadding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Bit-Perfect Mode"
+                        android:textColor="@color/on_surface"
+                        android:textSize="16sp" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switchBitPerfect"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:thumbTint="@color/primary"
+                        android:trackTint="@color/text_secondary" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp"
+                android:text="Folder Musik"
+                android:textColor="@color/primary"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardFolder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                app:cardBackgroundColor="@color/surface"
+                app:strokeColor="@color/surface"
+                app:cardElevation="0dp"
+                app:contentPadding="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Pilih Folder"
+                        android:textColor="@color/on_surface"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tvFolderPath"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Semua folder"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp"
+                android:text="Informasi"
+                android:textColor="@color/primary"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                app:cardBackgroundColor="@color/surface"
+                app:strokeColor="@color/surface"
+                app:cardElevation="0dp"
+                app:contentPadding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Aplikasi"
+                        android:textColor="@color/on_surface"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tvVersion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="v1.0"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/surface"
+                app:strokeColor="@color/surface"
+                app:cardElevation="0dp"
+                app:contentPadding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="MyMusic v1.0\nPemutar musik dengan dukungan bit-perfect audio dan equalizer.\nMendukung format MP3, M4A, OPUS, FLAC, WAV."
+                    android:textColor="@color/text_secondary"
+                    android:textSize="13sp"
+                    android:lineSpacingExtra="4dp" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
